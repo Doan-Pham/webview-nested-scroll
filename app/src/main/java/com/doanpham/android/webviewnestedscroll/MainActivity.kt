@@ -27,6 +27,32 @@ class WebViewWithLog(context: Context) : WebView(context) {
         println(">>>>> WebViewWithLog - onScrollChanged() - l: $l, t: $t, oldl: $oldl, oldt: $oldl")
     }
 
+    override fun overScrollBy(
+        deltaX: Int,
+        deltaY: Int,
+        scrollX: Int,
+        scrollY: Int,
+        scrollRangeX: Int,
+        scrollRangeY: Int,
+        maxOverScrollX: Int,
+        maxOverScrollY: Int,
+        isTouchEvent: Boolean
+    ): Boolean {
+        println(">>>>> WebViewWithLog - overScrollBy() - deltaY: $deltaY, scrollY: $scrollY, scrollRangeY: $scrollRangeY, maxOverScrollY: $maxOverScrollY")
+        return true
+//        return super.overScrollBy(
+//            deltaX,
+//            deltaY,
+//            scrollX,
+//            scrollY,
+//            scrollRangeX,
+//            scrollRangeY,
+//            maxOverScrollX,
+//            maxOverScrollY,
+//            isTouchEvent
+//        )
+    }
+
     override fun onOverScrolled(scrollX: Int, scrollY: Int, clampedX: Boolean, clampedY: Boolean) {
         super.onOverScrolled(scrollX, scrollY, clampedX, clampedY)
         println(">>>>> WebViewWithLog - onOverScrolled() - scrollX: $scrollX, scrollY: $scrollY, clampedX: $clampedX, clampedY: $clampedY")
