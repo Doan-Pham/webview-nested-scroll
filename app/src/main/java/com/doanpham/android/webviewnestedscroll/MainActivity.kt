@@ -1,5 +1,6 @@
 package com.doanpham.android.webviewnestedscroll
 
+import android.content.Context
 import android.os.Bundle
 import android.webkit.WebView
 import androidx.activity.ComponentActivity
@@ -19,6 +20,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+
+class WebViewWithLog(context: Context) : WebView(context) {
+    override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
+        super.onScrollChanged(l, t, oldl, oldt)
+        println(">>>>> WebViewWithLog - onScrollChanged() - l: $l, t: $t, oldl: $oldl, oldt: $oldl")
+    }
+
+    override fun onOverScrolled(scrollX: Int, scrollY: Int, clampedX: Boolean, clampedY: Boolean) {
+        super.onOverScrolled(scrollX, scrollY, clampedX, clampedY)
+        println(">>>>> WebViewWithLog - onOverScrolled() - scrollX: $scrollX, scrollY: $scrollY, clampedX: $clampedX, clampedY: $clampedY")
+    }
+}
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalLayoutApi::class)
@@ -81,9 +94,12 @@ class MainActivity : ComponentActivity() {
                     AndroidView(
                         modifier = Modifier
                             .border(2.dp, Color.Blue)
+                            .onSizeChanged {
+                                println(">>>>> AndroidView - onSizeChanged: $it")
+                            }
                             .fillMaxSize(),
                         factory = { context ->
-                            WebView(context).apply {
+                            WebViewWithLog(context).apply {
                                 loadDataWithBaseURL(
                                     null,
                                     html8000,
